@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>When are we free? 💕</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple: #534AB7;
+      --purple-light: #EEEDFE;
+      --purple-mid: #AFA9EC;
+      --purple-dark: #3C3489;
+      --teal: #1D9E75;
+      --teal-light: #E1F5EE;
+      --teal-mid: #5DCAA5;
+      --teal-dark: #085041;
+      --pink: #D4537E;
+      --pink-light: #FBEAF0;
+      --amber: #EF9F27;
+      --amber-light: #FAEEDA;
+      --amber-dark: #633806;
+      --bg: #FAFAF9;
+      --surface: #FFFFFF;
+      --border: rgba(0,0,0,0.10);
+      --border-strong: rgba(0,0,0,0.18);
+      --text: #1a1a18;
+      --text-muted: #6b6b67;
+      --text-subtle: #9a9a96;
+      --radius: 10px;
+      --radius-lg: 14px;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: 20px;
+      border: 0.5px solid var(--border);
+      box-shadow: 0 4px 32px rgba(0,0,0,0.06);
+      padding: 2rem;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .hero-hearts {
+      font-size: 32px;
+      margin-bottom: 0.75rem;
+      display: block;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    .hero h1 {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+    .hero p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      margin-bottom: 10px;
+    }
+
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      margin-bottom: 1.5rem;
+    }
+    .day-btn {
+      border: 0.5px solid var(--border);
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 10px 2px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s;
+      outline: none;
+    }
+    .day-btn:hover { border-color: var(--border-strong); background: #f5f5f3; }
+    .day-btn.selected { background: var(--purple-light); border-color: var(--purple-mid); }
+    .day-btn .dn { font-size: 10px; color: var(--text-subtle); display: block; margin-bottom: 3px; }
+    .day-btn .dd { font-size: 15px; font-weight: 500; color: var(--text); display: block; }
+    .day-btn.selected .dn { color: var(--purple); }
+    .day-btn.selected .dd { color: var(--purple-dark); }
+
+    .hours-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-bottom: 1.5rem;
+    }
+    .hour-btn {
+      border: 0.5px solid var(--border);
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 9px 4px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 12px;
+      font-family: inherit;
+      color: var(--text-muted);
+      transition: all 0.15s;
+      outline: none;
+    }
+    .hour-btn:hover { border-color: var(--border-strong); background: #f5f5f3; }
+    .hour-btn.selected { background: var(--teal-light); border-color: var(--teal-mid); color: var(--teal-dark); font-weight: 500; }
+
+    .chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.5rem; }
+    .chip {
+      padding: 6px 13px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-family: inherit;
+      cursor: pointer;
+      border: 0.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      transition: all 0.15s;
+      outline: none;
+    }
+    .chip:hover { border-color: var(--border-strong); }
+    .chip.active { background: var(--amber-light); border-color: var(--amber); color: var(--amber-dark); font-weight: 500; }
+
+    textarea {
+      width: 100%;
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--surface);
+      resize: none;
+      outline: none;
+      margin-bottom: 1.5rem;
+      transition: border-color 0.15s;
+      line-height: 1.6;
+    }
+    textarea:focus { border-color: var(--border-strong); }
+
+    .btn-generate {
+      width: 100%;
+      padding: 13px;
+      background: var(--purple);
+      border: none;
+      border-radius: var(--radius-lg);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+      letter-spacing: 0.01em;
+    }
+    .btn-generate:hover { opacity: 0.92; }
+    .btn-generate:active { transform: scale(0.99); }
+
+    .result-card {
+      background: var(--surface);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      margin-top: 1.25rem;
+      display: none;
+    }
+    .result-card.show { display: block; }
+    .result-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .result-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .result-title .heart { color: var(--pink); }
+    .copy-btn {
+      font-size: 12px;
+      color: var(--purple);
+      cursor: pointer;
+      border: 0.5px solid var(--purple-mid);
+      background: var(--purple-light);
+      font-family: inherit;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 99px;
+      transition: opacity 0.15s;
+    }
+    .copy-btn:hover { opacity: 0.8; }
+    .result-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      white-space: pre-wrap;
+      background: #f7f7f5;
+      border-radius: var(--radius);
+      padding: 12px 14px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 0.5px solid var(--border);
+      margin: 1.5rem 0;
+    }
+
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-subtle);
+      margin-top: 1.5rem;
+    }
+    .footer a {
+      color: var(--purple);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 480px) {
+      .card { padding: 1.25rem; }
+      .hours-grid { grid-template-columns: repeat(3, 1fr); }
+      .week-grid { gap: 4px; }
+      .day-btn { padding: 8px 1px; }
+      .day-btn .dd { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="hero">
+      <span class="hero-hearts">💕</span>
+      <h1>When are we free?</h1>
+      <p>Pick days and times — I'll send you the message</p>
+    </div>
+
+    <div class="section-label">Choose days</div>
+    <div class="week-grid" id="dayGrid"></div>
+
+    <div class="section-label">Choose hours</div>
+    <div class="hours-grid" id="hourGrid"></div>
+
+    <div class="section-label">What are we doing?</div>
+    <div class="chip-row">
+      <button class="chip" onclick="toggleVibe(this)">☕ Coffee</button>
+      <button class="chip" onclick="toggleVibe(this)">🍽️ Dinner</button>
+      <button class="chip" onclick="toggleVibe(this)">🎬 Movie</button>
+      <button class="chip" onclick="toggleVibe(this)">🌿 Walk</button>
+      <button class="chip" onclick="toggleVibe(this)">🎮 Stay in</button>
+      <button class="chip" onclick="toggleVibe(this)">🌙 Night out</button>
+      <button class="chip" onclick="toggleVibe(this)">🎨 Something fun</button>
+    </div>
+
+    <div class="section-label">Sweet note (optional)</div>
+    <textarea id="note" rows="2" placeholder="e.g. Miss you, can't wait to see you! 🥰"></textarea>
+
+    <button class="btn-generate" onclick="generate()">✨ Generate message</button>
+
+    <div class="result-card" id="resultCard">
+      <div class="result-header">
+        <span class="result-title"><span class="heart">♥</span> Your message</span>
+        <button class="copy-btn" onclick="copyText()" id="copyBtn">Copy</button>
+      </div>
+      <div class="result-text" id="resultText"></div>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="footer">
+      Made with 💜 by
+      <a href="https://github.com/mtchulukhadze" target="_blank" rel="noopener">mtchulukhadze</a>
+    </div>
+  </div>
+
+  <script>
+    const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    const selectedDays = new Set();
+    const selectedHours = new Set();
+    let activeVibe = null;
+
+    function getWeekDates() {
+      const today = new Date();
+      const dayOfWeek = today.getDay();
+      const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+      const monday = new Date(today);
+      monday.setDate(today.getDate() + mondayOffset);
+      return Array.from({ length: 7 }, (_, i) => {
+        const d = new Date(monday);
+        d.setDate(monday.getDate() + i);
+        return d;
+      });
+    }
+
+    const dates = getWeekDates();
+    const dayGrid = document.getElementById('dayGrid');
+    dates.forEach((date, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'day-btn';
+      btn.innerHTML = `<span class="dn">${DAYS[i]}</span><span class="dd">${date.getDate()}</span>`;
+      btn.setAttribute('aria-label', `${DAYS[i]} ${date.getDate()}`);
+      const key = `${DAYS[i]} ${date.getDate()}`;
+      btn.onclick = () => {
+        btn.classList.toggle('selected');
+        selectedDays.has(key) ? selectedDays.delete(key) : selectedDays.add(key);
+      };
+      dayGrid.appendChild(btn);
+    });
+
+    const HOURS = [
+      '8:00 AM','9:00 AM','10:00 AM','11:00 AM',
+      '12:00 PM','1:00 PM','2:00 PM','3:00 PM',
+      '4:00 PM','5:00 PM','6:00 PM','7:00 PM',
+      '8:00 PM','9:00 PM','10:00 PM','11:00 PM'
+    ];
+
+    const hourGrid = document.getElementById('hourGrid');
+    HOURS.forEach(h => {
+      const btn = document.createElement('button');
+      btn.className = 'hour-btn';
+      btn.textContent = h;
+      btn.onclick = () => {
+        btn.classList.toggle('selected');
+        selectedHours.has(h) ? selectedHours.delete(h) : selectedHours.add(h);
+      };
+      hourGrid.appendChild(btn);
+    });
+
+    function toggleVibe(el) {
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      if (activeVibe === el) { activeVibe = null; return; }
+      el.classList.add('active');
+      activeVibe = el;
+    }
+
+    function generate() {
+      if (selectedDays.size === 0 && selectedHours.size === 0) {
+        alert('Pick at least one day or hour first! 😊');
+        return;
+      }
+      const note = document.getElementById('note').value.trim();
+      const vibe = activeVibe ? activeVibe.textContent.trim() : null;
+      const dayList = [...selectedDays].join(', ');
+      const hourList = [...selectedHours].join(', ');
+
+      let msg = '';
+      if (note) msg += `${note}\n\n`;
+      msg += `Hey babe! 💕 Here's when I'm free for us:\n\n`;
+      if (dayList) msg += `📅 Days: ${dayList}\n`;
+      if (hourList) msg += `🕐 Hours: ${hourList}\n`;
+      if (vibe) msg += `✨ I was thinking: ${vibe}\n`;
+      msg += `\nLet me know what works for you! 🥰`;
+
+      document.getElementById('resultText').textContent = msg;
+      const card = document.getElementById('resultCard');
+      card.classList.add('show');
+      setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+    }
+
+    function copyText() {
+      const text = document.getElementById('resultText').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = 'Copied! ✓';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
