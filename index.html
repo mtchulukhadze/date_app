@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>When are we free? 💕</title>
+  <title>როდის წავიდეთ? </title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
@@ -265,36 +265,34 @@
 <body>
   <div class="card">
     <div class="hero">
-      <span class="hero-hearts">💕</span>
-      <h1>When are we free?</h1>
-      <p>Pick days and times — I'll send you the message</p>
+      <span class="hero-hearts"></span>
+      <h1>როდის წავიდეთ ?</h1>
+      <p>შეარჩიე დღე და დრო</p>
     </div>
 
-    <div class="section-label">Choose days</div>
+    <div class="section-label">აირჩიე დღე</div>
     <div class="week-grid" id="dayGrid"></div>
 
-    <div class="section-label">Choose hours</div>
+    <div class="section-label">აირჩიე დრო</div>
     <div class="hours-grid" id="hourGrid"></div>
 
-    <div class="section-label">What are we doing?</div>
+    <div class="section-label">რა გავაკეთოთ?</div>
     <div class="chip-row">
-      <button class="chip" onclick="toggleVibe(this)">☕ Coffee</button>
-      <button class="chip" onclick="toggleVibe(this)">🍽️ Dinner</button>
-      <button class="chip" onclick="toggleVibe(this)">🎬 Movie</button>
-      <button class="chip" onclick="toggleVibe(this)">🌿 Walk</button>
-      <button class="chip" onclick="toggleVibe(this)">🎮 Stay in</button>
-      <button class="chip" onclick="toggleVibe(this)">🌙 Night out</button>
-      <button class="chip" onclick="toggleVibe(this)">🎨 Something fun</button>
+      <button class="chip" onclick="toggleVibe(this)">☕ კაფე</button>
+      <button class="chip" onclick="toggleVibe(this)">🍽️ ვჭამოტ</button>
+      <button class="chip" onclick="toggleVibe(this)">🎬 ფილმი</button>
+      <button class="chip" onclick="toggleVibe(this)">🌿 ლისი / რუსთავი</button>
+      <button class="chip" onclick="toggleVibe(this)">🎨 რაიმე სახალისო</button>
     </div>
 
-    <div class="section-label">Sweet note (optional)</div>
-    <textarea id="note" rows="2" placeholder="e.g. Miss you, can't wait to see you! 🥰"></textarea>
+    <div class="section-label">წერილი (optional)</div>
+    <textarea id="note" rows="2" placeholder="მაგ. მომენატრე, მალე შევხვდებით! 🥰"></textarea>
 
-    <button class="btn-generate" onclick="generate()">✨ Generate message</button>
+    <button class="btn-generate" onclick="generate()">✨ დააგენერირე მესიჯი</button>
 
     <div class="result-card" id="resultCard">
       <div class="result-header">
-        <span class="result-title"><span class="heart">♥</span> Your message</span>
+        <span class="result-title"><span class="heart">♥</span> შენი მესიჯი მზად არის</span>
         <button class="copy-btn" onclick="copyText()" id="copyBtn">Copy</button>
       </div>
       <div class="result-text" id="resultText"></div>
@@ -303,7 +301,7 @@
     <hr class="divider" />
 
     <div class="footer">
-      Made with 💜 by
+      სიყვარულით 💜 
       <a href="https://github.com/mtchulukhadze" target="_blank" rel="noopener">mtchulukhadze</a>
     </div>
   </div>
@@ -380,11 +378,11 @@
 
       let msg = '';
       if (note) msg += `${note}\n\n`;
-      msg += `Hey babe! 💕 Here's when I'm free for us:\n\n`;
-      if (dayList) msg += `📅 Days: ${dayList}\n`;
-      if (hourList) msg += `🕐 Hours: ${hourList}\n`;
-      if (vibe) msg += `✨ I was thinking: ${vibe}\n`;
-      msg += `\nLet me know what works for you! 🥰`;
+      msg += `ამ დროს კარგი იქნება თუ შევხვდებით:\n\n`;
+      if (dayList) msg += `📅 დღე: ${dayList}\n`;
+      if (hourList) msg += `🕐 საათი: ${hourList}\n`;
+      if (vibe) msg += `✨ მე ვფიქრობ: ${vibe}\n`;
+      msg += `\n! 🥰`;
 
       document.getElementById('resultText').textContent = msg;
       const card = document.getElementById('resultCard');
